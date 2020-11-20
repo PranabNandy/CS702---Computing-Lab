@@ -1,0 +1,521 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% --Master File--- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Time-stamp: <2020-08-28 05:00:00 Chandra Has>
+%%% Document class is beamer
+%%% Document is using theme ChPresentation v1.1 <2020-08-28 05:00 Chandra Has>
+%============================= Document class and theme ================================
+% Documment class
+\documentclass{beamer} 
+
+% Beamer theme
+\usetheme{ChPresentation}
+%\usetheme[conference, darkblue, headline, footline, progressbar=percent]{ChPresentation}
+
+%-----------------------------------------------------------------------
+%        Title page: titlepage (default), notitlepage
+% 	   	 Title styles: plain (default), seminar, conference
+%		 Color themes: darkred (default), darkblue, darkgreen
+%		 Header/footer: headline, footline
+% 		 Progress bar styles: progressbar=fraction, progressbar=percent
+%        Frame logo position: logtoprightside (default), backgroundlogo
+%		 Vertical alignment: t (default), c
+%------------------------------------------------------------------------
+
+%\progressbar[red]{yellow}
+%\framebackgroundlogoopacity[0.2]
+%\backgroundcanvas{\includegraphics[width=\paperwidth, height=\paperheight]{bg1}}
+
+%============================= Packages and other commands ================================
+% Graphics paths
+\graphicspath{{gfx/}{themegraphics/}}
+%\linespacing[1.12] 
+
+%============================== Title page information =====================================
+%%%%% Predefined %%%%%  
+\title[Beamer Presentation: Various Links]{Optimal VM Coalition for Multi-Tier Applications Over Multi-Cloud Broker Environments}
+\subtitle{}
+
+\author[Sourav Kanti Addya]{Sourav Kanti Addya}
+
+\institute[IIT Kharagpur,India]{IIT Kharagpur,India\\ kanti.sourav@ieee.org}
+
+\date[\today]{\scriptsize \today}
+
+\titlegraphic{\includegraphics[scale=0.07]{fig99}}
+%\logo{\includegraphics[scale=0.08]{logo}}
+
+%%%%% Custom %%%%%
+\coauthors{Author Two \sep Author Three}
+
+\email[E-mail:]{chandrahashbti@gmail.com}
+
+\conference{International Conference on Nanotechnology:\\
+	Ideas, Innovations \& Initiatives–2017\\ (ICN:3I–2017)}
+
+\conferencelogo{\includegraphics[scale=0.35]{confer-logo}}
+
+\framelogo{\includegraphics[scale=0.047]{logo}} 
+
+%***********************************Main body*******************************************
+\begin{document}
+
+%---------------------------------------------------------------------------------------	
+\backgroundcanvas{}
+%--------------------------------------------------------------------------------------
+
+%---------------------------------------------------------------------------------------
+\section[Outline]{}
+%--------------------------------------------------------------------------------------
+
+%======================================
+% Use \begin{frame}[allowframebreaks]{Title}
+% if the TOC does not fit in one frame.
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
+%====================================== 
+
+%---------------------------------------------------------------------------------------
+\section{Introduction}
+%--------------------------------------------------------------------------------------
+
+%======================================
+\begin{frame}[fragile]{Normal text}
+	\scriptsize 		
+	This template uses 11pt font size, Times New Roman like font (txfonts package), titles in boldface, center justified text, left margin/right margins 6 mm, top/bottom margins 0mm, paragraph spacing 4pt, and line spacing 1.12.  
+	
+	Used fonts for different titles: title - \verb|\Large|; subtitle - \verb|\normalsize|; author - \verb|\small|; email - \verb|\tiny|; institute - \verb|\scriptsize|; date - \verb|\scriptsize|; frame title - \verb|\large|; section in toc - \verb|\small|; subsection in toc - \verb|\footnotesize|; section title - \verb|\Large|, block title - \verb|\normalsize|, itemize/enumerate items first label - \verb|\footnote{text}| and levels second/third - \verb|\scriptsize|. 
+	
+	Some times it is a good idea to \alert{highlight} certain words in the text. However, do not overuse highlighting since this will negate the effect.  Avoid to use footnotes, if possible. They needlessly disrupt the flow of reading. Either what is mentioned in the footnote is
+	important and should be placed in the normal text, or it is not important and should be left out (especially in a presentation).
+	
+	For basics about beamer presentation, watch this tutorial: \href{https://youtu.be/1KG7IY14h18}{https://youtu.be/1KG7IY14h18}. 
+\end{frame}
+%======================================
+
+%-----------------------------------------------------------------------------------
+\section{Lists, Columns, and Blocks}
+\SectionPage
+%-----------------------------------------------------------------------------------
+
+\subsection{Lists}
+
+%======================================
+\begin{frame}[fragile]{Lists: One below other}	
+	\begin{enumerate}\scriptsize
+		\item  Use short sentences.
+		\item  Prefer enumerations and itemize environments over plain text.
+		\item  Use \verb|description|  when you define several things.
+		\item  Avoid to use more than two levels of ``subitemizing''.
+		\item  Do not use animations just to attract the attention of your audience. 
+	\end{enumerate}
+	
+	\begin{itemize}\scriptsize
+		\item   Use \verb|\alert| to highlight important things.
+		\item   Prefer phrases over complete sentences.
+		\item   Punctuate correctly: no punctuation after phrases.
+		\item   Place (at least) one image on each slide, whenever possible.  
+	\end{itemize}	
+\end{frame}
+%======================================
+
+\subsection{Columns}
+
+%======================================
+\begin{frame}{Lists side by side using columns}
+	\scriptsize
+	\begin{columns}[T, onlytextwidth]
+		\column{0.45\linewidth}		
+		\begin{enumerate}
+			\item  Item One    
+			\item  Item Two     
+			\item  Item Three   
+			\begin{enumerate}
+				\item  Subitem One
+				\item  Subitem Two
+				\begin{enumerate}
+					\item  Subsubitem One
+					\item  Subsubitem Two
+					\item  Subsubitem Three
+				\end{enumerate}
+				\item  Subitem Three
+				\item  Subitem Four	
+			\end{enumerate}
+			\item Item Four		
+		\end{enumerate}
+		
+		\column{0.45\linewidth}	
+		\begin{itemize}
+			\item  Item One
+			\item  Item Two
+			\item  Item Three
+			\item  Item Four
+			\begin{itemize}
+				\item  Subitem One
+				\item  Subitem Two
+				\begin{itemize}
+					\item  Subsubitem One
+					\item  Subsubitem Two
+					\item  Subsubitem Three
+				\end{itemize}
+			\end{itemize}
+			\item Item Five
+		\end{itemize}
+		
+	\end{columns}
+\end{frame}
+%======================================
+
+\subsection{Blocks}
+
+%======================================
+\begin{frame}{Blocks, example blocks, and alert blocks}
+\scriptsize	
+	\begin{block}{Place the block title}
+		Some times it is useful to place the content inside a block.
+	\end{block}
+    
+    \begin{exampleblock}{Place the example block title}
+    	This is the example block body.
+    \end{exampleblock}
+    
+    \begin{alertblock}{Place the alert (highlighting) block title}
+    	This template uses 11pt font size, Times New Roman like font (txfonts package), titles in boldface, center justified text, left margin/right margins 6 mm, top/bottom margins 0mm, paragraph spacing 4pt, and line spacing 1.12.  
+    \end{alertblock}
+\end{frame}
+%======================================
+
+%======================================
+\begin{frame}{Blocks, example blocks, and alert blocks}
+	\scriptsize	
+	\begin{columns}[t]
+		\column{0.28\linewidth}		
+		\begin{block}{Block title}
+			\begin{enumerate}
+				\item  Item One
+				\item  Item Two
+				\item  Item Three
+				\item  Item Four
+				\item  Item Five
+				\item  Item Six
+				\item  Item Seven
+				\item  Item Eight
+			\end{enumerate}		 
+		\end{block}
+		
+		\column{0.33\linewidth}	
+		\begin{exampleblock}{Example block title} 
+			\begin{enumerate}
+				\item  Item One
+				\item  Item Two
+				\item  Item Three
+				\item  Item Four
+				\item  Item Five
+				\item  Item Six
+				\item  Item Seven
+				\item  Item Eight
+			\end{enumerate}	
+		\end{exampleblock}
+		
+		\column{0.28\linewidth}	
+		\begin{alertblock}{Alert block title}
+			\begin{enumerate}
+				\item  Item One
+				\item  Item Two
+				\item  Item Three
+				\item  Item Four
+				\item  Item Five
+				\item  Item Six
+			\end{enumerate}	
+		\end{alertblock}
+		
+	\end{columns} 	
+\end{frame}
+%======================================
+
+%--------------------------------------------------------------------------
+\section[Floats]{Figures and Tables}
+\SectionPage 
+%--------------------------------------------------------------------------
+
+%======================================
+\begin{frame}[c]{Figures and tables}
+	\centering\tiny 	
+	\includegraphics[width=0.32\linewidth]{drift-speed}	
+	
+	\vfill
+	
+	\begin{tabular}{llll} 
+		\toprule 
+		S. No. & Upper Phase   & Lower Phase & Strings (Y/N)  \\ 
+		\midrule 
+		1      & Lipid/ethanol & W           & Y \\  
+		2      & PS/ethanol    & W           & Y \\   
+		3      & PS/methanol   & W           & Y \\
+		4      & PS/propanol   & W           & Y \\
+		5      & PS/sucrose    & W           & N \\
+		6      & PS/water      & W           & N \\ 
+		\bottomrule
+	\end{tabular}
+	
+	\scriptsize
+	
+	\begin{alertblock}{\footnotesize Important message}
+		There is no need to use a figure/table environments in order to insert a figure/table into your presentation slide. The figure/table environments are merely a floating box which have a caption set to figure/table. 
+	\end{alertblock}
+\end{frame}
+%======================================
+
+%======================================
+\begin{frame}{Figures side by side using columns}
+	\vfill\tiny 
+	\begin{columns} 	
+		\column{0.32\linewidth}\centering	 
+		\includegraphics[width=0.93\linewidth] {aq-suc-vis}\\ (a)
+		
+		\column{0.32\linewidth}\centering
+		\includegraphics[width=0.95\linewidth] {xe_mu_h}\\ (b)
+		
+		\column{0.32\linewidth}\centering
+		\includegraphics[width=0.95\linewidth] {drift-speed}\\ (c)	
+	\end{columns} 
+\end{frame}
+%======================================
+
+%--------------------------------------------------------------------------
+\section{Mathematics}
+\SectionPage
+%--------------------------------------------------------------------------
+
+\subsection{Simpe mathametical expressions}
+
+%======================================
+\begin{frame}[fragile]{Mathematics}	
+	\scriptsize	
+	\begin{exampleblock}{Stokes-Einstein equation}
+		$$d_h=\frac{k_\mathrm{B}T}{3\pi\mu\mathcal{D}}$$
+		\hfill \cite{Selser76}
+	\end{exampleblock}
+ 
+	\begin{columns}[T] 
+		\column{0.45\linewidth} 
+		\begin{block}{Drift velocity}
+			$$v_d = -\frac{k_BT}{6\pi\mu_0^2a}\left(\frac{\mathrm{d}\mu_0}{\mathrm{d}x}\right)$$
+			 \hfill \cite{Russel89}
+			\begin{itemize}\scriptsize
+				\item  $m = 5.4 \times10^{-5}$ Pa-s and $\mu_0 \approx 0.86$ cP
+				\item  $v_d \approx 4\times10^{-9}$ m/s, for $c = 0.5\%$
+			\end{itemize}
+		\end{block}
+		
+		\column{0.45\linewidth} 
+		\includegraphics[width=0.8\linewidth]{drift-speed}		
+	\end{columns}	
+		
+	\begin{alertblock}{Important message}
+		 For inline math, use \verb|$...$|  or \verb|\(...\)|, and for display math, use \verb|$$..$$| or \verb|\[...\]|. There is no need to use \verb|equation| or \verb|align| environment. Numbers are not important in presentation.
+	\end{alertblock}
+\end{frame}
+%======================================
+
+\subsection{Theorem}
+
+%======================================
+\begin{frame}{Mathematics}	
+	\scriptsize	
+	\begin{theorem}[Fermat's little theorem]
+		If $p$ is a prime number and $a\in\mathbb{Z}$, then $a^{p-1}\equiv 1 \pmod{p}$
+	\end{theorem}
+	
+	\begin{proof}
+		The elements belong to 		
+		$$1, 2, \ldots, p - 1 \in \mathbb{Z}_p$$		
+		form a group under multiplication modulo~$p$. It is a group of order $p - 1$.
+		For $a \in \mathbb{Z}_p$ and $a \neq 0$, we thus find $a^{p-1} = 1 \in \mathbb{Z}_p$.
+	\end{proof}
+	
+	\begin{example}
+		Let $a = 2$ and $P = 17$. According to Fermat's little theorem: 		
+		$$2^{17-1} \equiv 1 \pmod{17}$$		
+		we find $2^{17-1}= 65536$, and that means $65536-1$ is an multiple of 17.
+		
+		\hfill \cite{Hosch09} 	
+	\end{example}    
+\end{frame}
+%======================================
+
+%--------------------------------------------------------------------------
+\section{Miscellaneous}
+\SectionPage
+%--------------------------------------------------------------------------
+
+%======================================
+\begin{frame}[label=main]{Linking inter-slides and external files}	 	
+	\begin{cexampleblock}{Resources}
+		\begin{itemize} \scriptsize  
+			\item[\faBook] Please refer to \href{beameruserguide.pdf}{beameruserguide.pdf} for more details about \LaTeX{} beamer class.
+			\item[\faGlobe] Go to     \href{https://ctan.org/tex-archive/macros/latex/contrib/beamer}{ctan.org} to download the beamer package. 
+		\end{itemize}
+	\end{cexampleblock}
+
+    \vskip-5mm 
+
+	\begin{columns} 
+		\column{0.35\linewidth} 	
+		\begin{cblock}{Experimental setup-1}   
+			\hyperlink{app1}{\includegraphics[width=\linewidth]{cuvette_setup}}\\			
+			\hyperlink{app1}{\beamergotobutton{Cuvette setup}} \hfill \cite{Phapal17}		
+		\end{cblock}		
+		
+	\column{0.6\linewidth}	
+	\begin{alertblock}{Important message}
+		\begin{itemize}  \scriptsize
+			\item Click somewhere on the left image or on the text ``cuvette setup'' to view the linked frame. 
+			\item In the top block, click on the text ``beameruserguide.pdf'' and ``ctan.org'' to open the linked an external PDF file and linked a web page, respectively.     
+			\item For learning about various links, see the ``source code'' and/or watch the tutorial on this topic (Link: \href{https://youtu.be/rJatK3nHaLQ}{https://youtu.be/rJatK3nHaLQ}) .
+		\end{itemize}	  
+	\end{alertblock}
+		
+\end{columns}
+\end{frame}
+%======================================
+
+%======================================
+\begin{frame}[c]{Embedding a movie}	
+	\centering\scriptsize	
+	\includemedia[%
+	width=0.75\linewidth,
+	addresource=gfx/sampleVideo.mp4,
+	flashvars={source=gfx/sampleVideo.mp4}
+	]{\includegraphics[width=\linewidth]{time_lapse-images}}{VPlayer.swf}\\
+	\hfill\cite{Has18}
+	
+	\vfill 
+	
+	\begin{alertblock}{Important message}
+		\begin{itemize} \scriptsize	
+			\item Use ``Adobe'' or ``Foxit'' PDF reader to play the embedded movie. Note that ``Flash player'' should be installed on a computer.
+			\item For learning about embedding a video into the frame, see the ``source code'' and/or watch the tutorial on this topic (Link: \href{https://youtu.be/ELnzyCSrCrI}{https://youtu.be/ELnzyCSrCrI}) .
+		\end{itemize}	  
+	\end{alertblock}
+\end{frame}
+%======================================
+
+%--------------------------------------------------------------------------
+\section{Conclusions}
+%--------------------------------------------------------------------------
+
+%======================================
+\begin{frame}{Conclusions}
+	\begin{block}{}
+		\begin{enumerate}\setlength{\itemsep}{3mm}\scriptsize
+			\item Particle propulsion was studied with two different solutes
+			\item Particles propel towards lower solute concentration.
+			\item No matter whether solution viscosity varies monotonically or non-monotonically
+			\item Interaction length is comparable to the expected one
+			\item The nature of interaction between solute and particle is still not cleared
+			\item Studies in MF device can help to get the idea about the interaction between solute and particle
+		\end{enumerate}
+	\end{block}
+\end{frame}
+%======================================
+
+%--------------------------------------------------------------------------
+\section{References}
+%--------------------------------------------------------------------------
+
+%======================================
+\begin{frame}{References}	
+	\scriptsize
+	\begin{thebibliography}{}
+				
+		\bibitem[Selser \etal, 1976]{Selser76} Selser JC, Yeh Y, and Baskin RJ, \emph{Biophys J}, 16(1976)1357--1371.
+		
+		\setbeamertemplate{bibliography item}[book]
+		\bibitem[Russel \etal, 1989]{Russel89} Russel WB, Saville DA, and Schowalter WR,  \emph{Cambridge university press}, 1989.  
+		
+		\setbeamertemplate{bibliography item}[online]
+		\bibitem[Hosch, 2009]{Hosch09} Hosch WL, \emph{Fermat's theorem}, 2009. \url{https://www.britannica.com/science/Fermats-theorem}
+		
+		\setbeamertemplate{bibliography item}[article]
+		\bibitem[Phapal \etal, 2017]{Phapal17} Phapal SM, Has C, and Sunthar P, \emph{Chem Phy Lipids}, 205(2017)25-33.
+		
+		\bibitem[Has \etal, 2018]{Has18} Has, C, Phapal SM, and Sunthar P., \emph{Chem Phy Lipids}, 212(2018)144-151.					 
+		
+	\end{thebibliography}
+\end{frame}
+%======================================
+
+%--------------------------------------------------------------------------
+%\section{Query}
+%--------------------------------------------------------------------------
+
+%======================================
+\begin{frame}[c, plain,noframenumbering]{Thank you and query please$\ldots$} 
+	\hfill 
+	\begin{minipage}[b]{0.5\linewidth}   
+		\begin{exampleblock}{Chandra Has}
+			\begin{itemize}\scriptsize 
+				\item[\faWhatsapp] +91 xx xxxx xxxx
+				\item[\faPhone] +91 xx xxxx xxxx
+				\item[\faFax] +91 xx xxxx xxxx
+				\item[\faEnvelope] \url{chandrahashbti@gmail.com}
+				\item[\faYoutube] \url{www.youtube.com/chandrahashbti} 
+			\end{itemize}
+		\end{exampleblock}
+	\end{minipage}
+	\hfill 
+	\begin{minipage}[b]{0.3\linewidth} 	
+		\includegraphics[scale=0.6]{query}
+	\end{minipage} 
+	\hfill                                                         
+\end{frame}	
+%======================================
+
+%*******************
+\appendix
+%*******************
+
+%--------------------------------------------------------------------------
+\section*{Ethanol-Water Viscosity}
+%--------------------------------------------------------------------------
+ 
+%======================================
+\begin{frame}[c, label=app1]{Ethanol/Water viscosity \textit{vs.} distance}   
+	\centering\scriptsize		
+	\hyperlink{main}{\includegraphics[width=0.5\linewidth]{xe_mu_h}}\\	
+	\hyperlink{main}{\beamerreturnbutton{$\eta\ \text{vs.}\ h$}}
+	
+	\vfill 
+	
+	\begin{minipage}{0.75\linewidth}
+		\color{blue}\ding{45} Click somewhere on the above image or the text ``$\eta\ \text{vs.}\ h$'' to view the linked frame. For learning about links, click here \ding{43} \href{https://youtu.be/rJatK3nHaLQ}{\faFileMovieO}.
+	\end{minipage}
+\end{frame}	
+%======================================
+
+%--------------------------------------------------------------------------
+\section*{Aqueous Fluorescein Sodium Salt}
+%--------------------------------------------------------------------------
+
+%======================================
+\begin{frame}[c]{Aqueous fluorescein sodium salt}
+	\centering\scriptsize
+	\begin{minipage}{0.5\linewidth}
+		\begin{cblock}{} \centering
+			\renewcommand{\arraystretch}{1.25}	
+			\begin{tabular}{lll}
+				\toprule
+				C (mg/ml) & T ($^\circ$C) & Diffusivity $(\mathrm{m^2/s})$ \\ 
+				\midrule
+				0.05      & 21.5          & $4.9\times 10^{-10}$           \\		
+				--        & --            & $6.4\times 10^{-10}$           \\
+				0.04      & 25            & $5.2\times 10^{-10}$           \\ 
+				\bottomrule
+			\end{tabular}
+		\end{cblock}
+	\end{minipage}
+\end{frame}
+%======================================
+	
+\end{document}
+%===========================================================================================
