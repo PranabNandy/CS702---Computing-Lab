@@ -1,0 +1,602 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\SPSB#1#2{\rlap{\textsuperscript{\textcolor{red}{#1}}}}
+\usepackage{amsmath}
+\usepackage{fourier}
+\usepackage{hyperref}
+\pagenumbering{arabic}
+
+\newcommand\tab[1][0.8cm]{\hspace*{#1}}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\makeatletter
+\let\old@ps@headings\ps@headings
+\let\old@ps@IEEEtitlepagestyle\ps@IEEEtitlepagestyle
+\def\confheader#1{%
+	% for all pages except the first
+	\def\ps@headings{%
+		\old@ps@headings%
+		\def\@oddhead{\strut\hfill#1\hfill\strut}%
+		\def\@evenhead{\strut\hfill#1\hfill\strut}%
+	}%
+	% for the first page
+	\def\ps@IEEEtitlepagestyle{%
+		\old@ps@IEEEtitlepagestyle%
+		\def\@oddhead{\strut\hfill#1\hfill\strut}%
+		\def\@evenhead{\strut\hfill#1\hfill\strut}%
+	}%
+	\ps@headings%
+}
+\makeatother
+
+\confheader{%
+	2019 11th International Conference Communication Systems \& Networks (COMSNETS)
+}
+
+
+%%%%%%%for footer%%%%%%%%%%%
+
+\usepackage[pscoord]{eso-pic}
+\newcommand{\placetextbox}[3]{
+	\setbox0=\hbox{#3}
+	\AddToShipoutPictureFG*{ \put(\LenToUnit{#1\paperwidth},\LenToUnit{#2\paperheight}){\vtop{{\null}\makebox[0pt][c]{#3}}}
+	}
+}
+\placetextbox{.23}{0.055}{\small{978-1-5386-7902-9/19/\$31.00~\copyright2019 IEEE}}
+
+\begin{document}
+
+\title{Optimal VM Coalition for Multi-Tier Applications
+	Over Multi-Cloud Broker Environments\\
+
+{\footnotesize \textsuperscript{}}
+}
+
+\author{\IEEEauthorblockN{ Sourav Kanti Addya}
+\IEEEauthorblockN{{IIT Kharagpur,India} \\
+\IEEEauthorblockA{kanti.sourav@ieee.org}}
+\and
+\IEEEauthorblockN{Anurag Satpathy}
+\IEEEauthorblockA{{NIT Rourkela,India} \\
+\IEEEauthorblockA{anurag.satpathy@gmail.com}}
+\and
+\IEEEauthorblockN{ Sandip Chakraborty}
+\IEEEauthorblockA{{IIT Kharagpur, India} \\
+\IEEEauthorblockA{sandipc@cse.iitkgp.ac.in}}
+\and
+\IEEEauthorblockN{\textsuperscript{}Soumya K Ghosh}
+\IEEEauthorblockA{{IIT Kharagpur, India} \\
+\IEEEauthorblockA{skg@cse.iitkgp.ac.in} }
+}
+
+\maketitle
+%\thispagestyle{empty} %--to make title page number less
+%\pagestyle{empty} 
+\pagestyle{plain} 
+
+\begin{abstract}
+In the current cloud market tradition, multi-cloud
+broker environments have an important role to support multi-
+tier cloud applications where a set of interconnected virtual
+machines (VMs) are required for the deployment and execution
+of the application. There are several cloud service providers (SP)
+who provide services in the form of different VM instances. For
+different SPs, pricing of different configurations is different based
+on various technical, service level as well as economic factors.
+Also, these SPs have multiple data centers located at different
+geographical locations with diverse resources and pricing schemes
+due to differences in electricity costs, maintenance costs etc. in
+different regions. Considering these facts, in this paper, we pro-
+pose a multi-cloud broker environment to select an optimal VM
+coalition for multi-tier applications from an SP with minimum
+coalition pricing and better quality of service. We model the
+problem as a bi-objective optimization problem and solve it using
+ant-colony optimization based technique. The entire interaction
+of SPs is modeled using game theory and results from simulation
+show promising behavior in achieving the trade-off between the
+aggregate cost and the QoS.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Cloud Computing; Data center; Virtual machine
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+\tab Cloud computing enables users to host their applications
+on the infrastructure provided by various third parties called
+as service providers (SPs). Virtualization enables SPs to host
+multiple applications in the form of virtual machines (VM)
+instances on the same host machine. In general, applications
+hosted on cloud are multi-tier in nature ~\cite{b1}, ~\cite{b2}. As an
+illustration, a typical multi-tier web application consist of three
+tiers namely (i.) presentation layer (web tier), (ii.) business
+logic layer (App tier) and the data layer (database tier) ~\cite{b3}. In
+a typical end-to-end deployment, different layers are deployed
+over different VMs, with disparate configurations and variable
+memory access patterns. These VMs often communicate with
+each other and serve user requests as shown in Fig. 1.\newline
+\tab
+The pricing policies used by SPs vary with respect to
+instance type, location and electricity price of the location
+hosting the VM ~\cite{b4}. For instance, pricing policies of some
+popular SPs, i.e., Amazon EC2, Microsoft Azure and Google
+is listed in Table I (as of November 22, 2018). It can be
+observed form the table that prices of different instance types
+are different. It can also be observed that prices for a same
+instance type for same/different SPs are different based on the
+location of the DC hosting such VMs. Hence, a user is left
+with multiple options to choose from. To relive users from the agony of 
+\begin{figure}[htbp]
+	\centerline{\includegraphics[height=40mm,width=90mm]{fig0.png}}
+	\caption{Multi-tier Applications: Every tier is deployed on a different VM and
+		the VM communicates with each other to provide end-to-end services.}
+	\label{fig}
+\end{figure}
+selection, we, in this paper, introduce a centralized
+entity called as cloud-broker (CB) that performs this activity
+on behalf of users. In fact, a CB makes best possible selection
+of VMs from an underlying SP to host a set of VMs supporting
+the user application. A request to host a service is received at
+the CB and is processed at the queue. The CB has many SPs
+at its disposal, and it tries to find the best possible service set
+(called the coalition of VMs or the set of VMs) such that the
+aggregate price of hosting the application is minimum.
+\newline
+\tab In this paper, we model the environment using game theory
+which is a popular approach to model the strategic interactions
+among multiple competing players. The outcome of a game
+depends on the actions of other players. The SPs compete with
+each other to maximize their individual profit by maximizing
+the number of requests accepted. At the same time, the aggregated price of hosting an application is kept at an affordable
+rate to attract more applications. This makes game theory
+an apt framework to model the strategic interactions among
+such competing SPs. The CB decides the most appropriate
+SP to host services based on the outcome of the game.
+Each user application requests different VM instances, and we
+assume that each application has the capability of executing
+at every SP under the CB. The objective is to build a game
+model where each user application can be represented as a
+coalition of VMs executing at a SP. The CB aims to find a
+coalition such that the aggregate user price is reduced. As a
+consequence of this approach, VMs supporting an applications
+might be hosted at different DCs at different geographical
+locations. This might lead to the issues of VM dispersion.
+\begin{table}[htbp!]
+	\caption{REGION BASED VM PRICING FOR 3 SPs ~\cite{b5}, ~\cite{b6}, ~\cite{b7}}
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c}
+			\hline
+			Type & Region 1 & Region 2 & Region 3 & Region 4\\
+			Category & Central US & India west & Sydney & Tokyo\\
+			(VM) & (\$/hr) & (\$/hr) & (\$/hr) & (\$/hr)\\
+			\hline
+		\multicolumn{5}{c}{	\textbf{Microsoft Azure}}\\
+		\hline
+		t1 (A1) & 0.012 & 0.014 & 0.015 & 0.015\\
+		t2 (A2) & 0.048 & 0.054 & 0.059 & 0.059\\
+		t3 (A3) & 0.023 & 0.027 & 0.029 & 0.029\\
+		t4 (A4) & 0.094 & 0.11 & 0.12 & 0.12\\
+		\hline
+		\multicolumn{5}{c}{	\textbf{Amazon EC2}}\\
+		\hline
+		t1 (Small) & 0.023 & 0.0248 & 0.0292 & 0.0304\\
+		t2 (Medium)) & 0.0464 & 0.0496 & 0.0292 & 0.0608\\
+		t3 (Large) & 0.0928 & 0.0992 & 0.1168 & 0.1216\\
+		t4 (2Exlarge) & 0.3712 & 0.3968 & 0.4672 & 0.4864\\
+		\hline
+		\multicolumn{5}{c}{	\textbf{Google Cloud}}\\
+		\hline
+		t1 (Standard-1) & 0.0475 & 0.057 & 0.0674 & 0.061\\
+		t2 (Standard-2) & 0.0950 & 0.1141 & 0.1348 & 0.122\\
+		t3 (Standard-3) & 0.19 & 0.2282 & 0.2697 & 0.244\\
+		t4 (Standard-4) & 0.38 & 0.4564 & 0.5393 & 0.488\\
+		\hline
+		\end{tabular}
+		\label{tab1}
+	\end{center}
+\end{table}
+\newline
+\tab VM dispersion is the act of executing VMs supporting the
+same application at geographically distant DCs. This can lead
+to degradation of the quality of service (QoS) in the form of
+delayed response due to the communication overhead. This
+is because links connecting DCs have limited capacity ~\cite{b5}.
+Hence, we also calculate the degradation in QoS, i.e., latency
+involved for communicating VMs supporting an application.
+Higher latency is intolerable; hence, we perform a trade-off
+against the incurred cost. We solve this optimization problem
+using the ant colony optimization (ACO) ~\cite{b6} based technique.
+In a nutshell, the objectives of this paper can be highlighted
+as follows.
+\begin{itemize}
+	\item We propose a non-cooperative game model among SPs
+	to maximize their individual revenues.
+	\item We develop a VM coalition architecture to find a min-
+	imum cost coalition to reduce the aggregate user price
+	to host user application in a multi-tier cloud platform.
+	\item As VMs hosting the application suffer from VM disper-
+	sion, we formulate the latency incurred in servicing a
+	request if VMs are placed at different DCs under the
+	same SP.
+	\item We optimize the aggregate price and latency incurred to
+	make the system real-time.
+\end{itemize}
+While the existing literature [~\cite{b1},~\cite{b2}, ~\cite{b3}, ~\cite{b4}looks to
+the problem from broker-perspective, we face the problem
+from end-users’ requirements of optimizing the price as well
+as the QoS. The proposed VM coalition architecture has
+been implemented and simulated over CloudSim 3.0 simulator.
+Results show that the proposed approach is able to reduce the
+aggregate price but may sometimes lead to slightly higher la-
+tency due to VM dispersion. In general, our approach for price
+optimization is able to reduce the aggregate price of hosting
+the resources by 35% but leads to an increased latency of 15%
+in comparison to a random assignment technique which is
+primarily latency sensitive. However, we observe that the final
+optimization based on ACO leads to an allocation vector that
+balances both the price and latency in a pareto-optimal scale.
+This shows the efficiency of the proposed solution which can
+be applied on a variety of cloud applications over broker-based
+multi-cloud federated platforms.
+\newline
+\tab The rest of the paper is organized as follows. Section II deals with the literature that we have reviewed. Section III
+discusses the proposed model in detail. Section IV discusses
+the simulation results, and finally in Section V, we draw the
+conclusions and discuss the future works in this direction.
+\section{RELATED WORK}
+\tab A number of works in the literature has focused on various
+aspects of cloud federation, multi-tier cloud applications and
+broker based multi-cloud federated platforms. Samaan ~\cite{b5} has
+proposed a novel model for capacity sharing in a federation
+of cloud infrastructure service providers. They modeled the
+interactions among the service providers as a repetitive game
+of VM outsourcing with an option of offering all unused
+capacity in spot market. In ~\cite{b3}, Mashayekhy et al. have
+proposed a cloud federation model based on game theory to
+enhance provider’s dynamic resources to fulfill users demand.
+They proposed a dynamic cooperation among the SPs to form
+a federation in order to provide the requested resources to the
+users, yielding the highest total profit as well as individual
+profit for each participating service providers. On the other
+hand, Pillai and Rao ~\cite{b6} have proposed a resource allocation
+model based on game theory. They propose coalition formation
+among machines in the cloud. A number of recent systems and
+prototypes in the similar direction has also developed cloud
+federation strategies for better resource utilization and request
+satisfaction following the centralized broker based federation
+architecture, such as OnApp ~\cite{b1}, Arjuna’s Agility framework
+~\cite{b8} etc.
+\newline
+\tab The recent literature on multi-cloud coordination have
+considered broker based platforms. Quarati et al.~\cite{b10} have
+proposed a hybrid cloud broker, which implies that the cloud-
+broker can allocate a service to its private resources or public
+clouds. In fact, revenue of a broker consists of brokering
+service price and resource provisioning price. If the service
+is executed on its private resources, the broker revenue is the
+sum of two parts; otherwise, the CB only gets the brokering
+service price, and the resource provisioning price is paid to the
+public clouds. Mei et al. ~\cite{b8}, have proposed a broker-centric
+architecture to minimize the cost incurred by the short-term
+users. The broker rents reserved instances that have discounted
+price and rents them to the short-term users with smaller
+billing time units (BTU) at a significantly low prices. The
+broker can also gain profits by earning the differences in the
+price of reserved and on-demand VMs. In ~\cite{b9}, the authors
+have proposed a new kind of broker for cloud computing,
+whose business relies on outsourcing VMs to its customers.
+More specifically, the broker owns a number of reserved
+instances of different VMs from several cloud providers and
+offers them to its customers in an on-demand basis. Larumbe
+and Sanso ~\cite{b10} have proposed an energy-aware VM placing
+broker to minimize operational expenditures while respecting
+constraints on QoS, power consumption and CO 2 emissions.
+\newline
+\tab From the above discussion, we observe that the federated
+cloud architecture and the multi-cloud broker based platforms
+have been well investigated in the existing literature, and practical systems exist to cater such requirements for the end-
+users for cost optimization purpose. However, the existing
+studies mostly look into the profit maximization for the broker
+while ensuring budgetary constraints from the end-users. This
+paper looks the problem from the end-user point of view,
+where the objective is to minimize the cost for the end-users
+while ensuring the QoS for the running application. This also
+caters to the dynamic distribution of VMs over geo-distributed
+DCs from a service provider. We primarily look into the
+following perspectives – (a) select the SP that can provide
+minimum cost service; (b) select the DCs for the SP that can
+ensure QoS of the running application while minimizing the
+cost for VM deployment. We consider that the broker gets a
+fix share of the cost by selecting the best (optimized in terms
+of QoS and price) configurations for the end-user based on the
+service availability at different SPs.
+
+\section{PROPOSED MODEL}
+
+\tab In this section we first formally define a multi-cloud SP
+broker system. The overall architecture of a CB is depicted in
+Fig. 2. The CB interconnects the SPs and the end-user. The
+VM allocation request from the user is processed by the CB;
+based on the output, the broker initiates the VM allocation to
+a SP and returns back the VM handle to the end-user. The
+allocation model proposed in the paper runs at the CB based
+on the service request from the end-user and the resource
+availability as well as pricing scheme for the SPs. Let B be a
+\begin{figure}[htbp]
+	\centerline{\includegraphics[height=40mm,width=90mm]{fig2.png}}
+	\caption{Multi-cloud broker system}
+	\label{fig}
+\end{figure}
+\newline
+broker which can be defined as B = \{SP${_{1}}$, SP${_{2}}$ , · · · ,SP ${_{l}}$ \}
+with l SPs. Each SP has many DCs across the globe and
+provides services in the form of VM instances. A SP SP i
+consists of multiple geographically distributed DCs and is
+defined as SP i = \{DC$^1_i$ , DC$^2_i$ , · · · , DC$^p_i$ \}, where p is the
+total number of data DCs under SP i . For different SPs, value
+of p will be different which provides heterogeneity to our architecture.  In our model, we
+consider different instances and their variable pricing (based
+on their location) for different SPs. For example Table I shows
+the variable pricing of Amazon EC2, Microsoft Azure and
+Google for similar VM instances across different geographical
+locations. The following assumptions is made for the proposed
+multi-cloud SP broker system.
+\begin{enumerate}
+	\item Resource capacity of a host machine at each SP is
+	known.
+	\item Pricing of each VM instance for all SPs are pre-defined.
+	\item For any multi-tier application requesting different VM
+	instances, a coalition can be possible from each SP under
+	cloud-broker jurisdiction.
+\end{enumerate}
+\subsection{Broker Queue}
+\tab The request of a multi-tier application arrives at the broker.
+The broker processes the request in a first-in-first-out (FIFO)
+order. A broker queue consists of l parallel service facilities
+where l is the total SPs associated with the broker. Let N be
+the capacity of capacity of the broker queue. Let $\lambda$$_n$ be the arrival rate and $\mu$ $_n$ be service rate of each
+SP, where n is the number of request in any defined interval.
+\newline
+The Maximum size of broker queue is N-l. We can define 
+$\lambda$$_n$ and $\mu$ $_n$ as follows.
+\begin{equation}
+{\otherlambda} =\begin{cases}
+\otherlambda,& \text{ } 0\leq n\leq N\\
+0,              & \text{n $>$ N}
+\end{cases}
+\end{equation}
+\begin{equation}
+{\othermu} =\begin{cases}
+n\othermu,& \text{ } 0\leq n\leq c\\
+c\othermu,              & c\leq n\leq N
+\end{cases}
+\end{equation}
+Using $\tau$ = $\lambda$ /$\mu$ the steady state probability P$_n$ is given by
+\begin{equation}
+P_n =\begin{cases}
+\frac{\tau ^n}{n!}P_0,& \text{ } 0\leq n\leq c\\
+\frac{\tau ^n}{c!c^{\text{n-c'}}}P'_0,              & c\leq n\leq N
+\end{cases}
+\end{equation}
+where,
+\begin{equation}
+P_0 =\begin{cases}
+( \sum_{n=1}^{c-1} \frac{\tau ^n}{n!}+ \frac{\tau(1-(\frac{\tau}{c})^{\text{N-c+1}})}{c!(1-\frac{\tau}{c})} )^{\text{-1}},& \frac{\tau}{c} \not= 1 \\
+( \sum_{n=1}^{c-1}\frac{\tau ^n}{c!}+\frac{\tau}{c}(N-c+1))^{\text{-1}},              & \frac{\tau}{c} = 1
+\end{cases}
+\end{equation}
+\subsection{Service Coalition Game for Profit Maximization}\label{AA}
+A standard game comprises of all conceivable strategies of
+every player and their corresponding payoffs ~\cite{b10}, ~\cite{b8}. To get
+a service request placed in its own DCs, a SP can impose some
+strategy. More number of service requests a SP can allocate,
+the more profit it can gain. We define the following terms
+related to service coalition selection game.
+\newline
+\tab In a single broker multi-cloud SP scenario, SPs, users and
+broker have their own individual preferences. SPs want to
+host maximum applications which leads to maximize their
+profit while balancing the overall investment. Users have
+different QoS and price specifications. All these preferences
+have a impact on broker’s own preferences, which leads to
+the stable multi-cloud broker system and its responses.
+
+\subsection{Problem Formulation}
+We solve the above mentioned optimization problem using ant colony optimization (ACO) [24]. ACO is a popular
+technique that has been used to solve different multi-objective
+optimization problems in the literature [9], [25]. Any algorithm
+based on ACO has to take care of the three things, viz., (i.)
+pheromone update, (ii.) definition of pheromone and heuristic
+information and (iii.) pheromone and heuristic information.
+The solution is mainly based on ACS. The detailed steps is
+shown in Algorithm 2 and 1. Ants deposit and can smell
+pheromones, they tend to follow the path that has higher
+such deposits. After evaluating the quality of food ants deposit pheromones as per their evaluation and help other ants
+discover the food.
+
+
+\section{RESULTS}
+We have evaluated the proposed model using CloudSim
+3.0 simulator, which is a standard simulator framework for
+evaluating cloud computing framework. The proposed architecture and VM allocation strategy at the CB has been
+implemented using CloudSim to test the system performance.
+Various parameters used for simulation are summarized in
+Table II. As mentioned in Section I, we have used four different VM instances and their respective pricing models
+each from, Amazon EC2 ~\cite{b5}, Microsoft Azure ~\cite{b6}and Google
+Cloud ~\cite{b7}.
+
+\subsection{Depicting the System Configuration}
+\begin{table}[htbp!]
+	\caption{SIMULATION PARAMETERS.}
+	\begin{center}
+		\begin{tabular}{|c|c|c|}
+			\hline
+		Sl. No. & Category & Value\\
+			\hline
+		1 & Number of cloudlets& 250 \\
+			\hline
+			2 & Number of processing elements per host (pes) & 16\\
+			\hline
+			3 & Input File size & 500 Bytes \\
+			\hline
+				4 & Output File Size & 500 Bytes \\
+			
+			\hline
+			5 & Number of Hosts & 500  \\
+			\hline
+			6 & Number of APPS & 50 - 250 \\
+			\hline
+			
+		\end{tabular}
+		\label{tab1}
+	\end{center}
+\end{table}
+
+\begin{table}[htbp!]
+	\caption{HOST CONFIGURATION USED IN SIMULATION}
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			MIPS Rating & Pes & RAM & Disk Size & VMM\\
+			\hline
+			100000 & 16 & 32 GB & 1 TB & Xen \\
+			\hline
+			125000 & 16 & 32 GB & 800 TB & Xen\\
+			\hline
+			135000 & 32 & 64 GB & 1.5 TB & Xen \\
+				\hline
+		\end{tabular}
+		\label{tab1}
+	\end{center}
+\end{table}
+\tab A multi-tier
+application request consists of multiple VM instance types, as
+shown in Table V. We have considered 50 to 250 application
+requests at an interval of 50 per observation. We have also
+considered that the arrival of requests at the broker queue
+follows a Poisson process. As there is no existing technique
+in the literature that considers similar type of architecture
+from end-user perspective, as a baseline, we have considered
+a random assignment of VMs based on the end-user requests
+and the resource availability at the SP considering latency
+as a metric, and have calculated the average latency and
+the cost incurred. This baseline has been considered for the
+performance comparison with the proposed methodology used
+in this paper
+\subsection{Depicting the Evaluation}
+\begin{figure}[htbp]
+	\centerline{\includegraphics[height=40mm,width=60mm]{fig3.png}}
+	\caption{Time (ms) vs Application processed}
+	\label{fig}
+\end{figure}
+\begin{figure}[htbp]
+	\centerline{\includegraphics[height=40mm,width=60mm]{fig4.png}}
+	\caption{Application placed vs processed}
+	\label{fig}
+\end{figure}
+\begin{figure}[htbp]
+	\centerline{\includegraphics[height=40mm,width=60mm]{fig5.png}}
+	\caption{Revenue(\$) vs Application processed}
+	\label{fig}
+\end{figure}
+\tab Fig. 3 shows the time required to process the applications
+over the proposed architecture. We observe that the processing
+time (queuing time + service time) increases exponentially as
+the number of application requests increase. This is because
+of the increase in waiting time of applications in the queue
+with increasing number of request arrivals. With this pattern
+of application processing time, next we observe how many
+applications are placed at different SPs with respect to the
+total number of application processed under the two schemes
+- the proposed optimization based on ACO (mentioned as
+ACO in the graphs), and the baseline mechanism as mentioned
+earlier (random). Fig 4 denotes the relationship between the
+application placed and the application processed over the
+three SPs. It can be observed from the plot that maximum
+applications are hosted at SP$_1$ and SP$_2$. This can be attributed
+to the fact that SP$_1$ and SP$_2$ charge less for different VM
+instance types which can be observed from Table I. Moreover,
+it can also be observed from Table I that the difference in price
+for same VM instance type at different geographical location is
+less for SP$_1$ and SP$_2$ in comparison with SP$_3$, hence, leading
+to larger number of application being hosted at SP$_1$ and SP$_2$.
+
+
+\begin{figure}[htbp]
+	\centerline{\includegraphics[height=40mm,width=60mm]{fig6.png}}
+	\caption{Application placed vs processed}
+	\label{fig}
+\end{figure}
+
+\section{CONCLUSION AND FUTURE WORK}
+\tab In this paper, we proposed a centralized cloud-broker that
+selects VMs on behalf of end-users such that the aggregate
+price of hosting the VMs is minimum. As this approach may
+lead to the issue of VM dispersion, we formulated the overall
+problem as a bi-objective optimization problem and solved it
+using ACO based framework. The strategic interaction among
+the SPs in modelled as a non-cooperative game as every SP
+tries to maximize its revenue by maximizing the number of
+requests accepted.
+\newline
+\tab Results show that the proposed approach is
+able to achieve proper trade-off between the cost of hosting
+an application and its QoS. However, in this paper, the service
+set coalition for hosting services is selected from a single SP.
+These VMs are hosted at separate DCs but under the umbrella
+of a single SP. As an immediate extension of this work, we
+would like to construct the VM service set by including VMs
+from different SPs, i.e., a federated architecture. The pricing
+framework involved in such an architecture involves further
+complexities and is left to be explored in the future.
+\newline
+\newline
+
+
+
+\begin{thebibliography}{00}
+\bibitem{b1} D. Huang, B. He, and C. Miao, “A survey of resource management in
+multi-tier web applications,” IEEE Communications Surveys Tutorials,
+vol. 16, no. 3, pp. 1574–1590, 2014.
+\newline
+\bibitem{b2} R. Gibbons, “A primer in game theory,” 1992.
+\newline
+\bibitem{b3} R. S. Gibbons, “An introduction to applicable game theory,” 1997.
+\newline
+\bibitem{b4} C. Blum, “Ant colony optimization: Introduction and recent trends,”
+Physics of Life Reviews, vol. 2, no. 4, pp. 353 – 373, 2005.
+\newline
+\bibitem{b5} Amazon EC2, VM Configuration and Pricing. September 2018.
+[Online]. Available: \url{https://aws.amazon.com/ec2/pricing/on-demand/}
+\newline
+\bibitem{b6} Microsoft Azure, VM Configuration and Pricing. September, 2018. [On-
+line]. Available: \url{https://azure.microsoft.com/en-in/pricing/details/virtual-
+machines/linux/}
+\newline
+\bibitem{b7} Google cloud, VM Configuration and Pricing. September 2018.
+[Online]. Available: \url{https://cloud.google.com/compute/pricing}
+\newline
+
+\bibitem{b8}  Arjuna’s Agility framework. [Online]. Available:
+\href{https://onapp.com/federation}{https://onapp.com/federation}
+\newline
+\bibitem{b9} F. Magoul`es, J. Pan, and F. Teng, Cloud computing: Data-intensive
+computing and scheduling. CRC press, 2012, ch. Game theoretical
+allocation in a cloud datacenter, pp. 41–62.
+\newline
+\bibitem{b10}E. Feller, L. Rilling, and C. Morin, “Energy-aware ant colony based
+workload placement in clouds,” in Grid Computing (GRID), 2011 12th
+IEEE/ACM International Conference on, 2011, pp. 26–33.
+
+\end{thebibliography}
+
+\end{document}
