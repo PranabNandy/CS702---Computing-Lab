@@ -1,0 +1,185 @@
+
+\documentclass[10pt,a4paper,ragged2e,withhyper]{altacv}
+\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
+
+\usepackage{paracol}
+
+
+\ifxetexorluatex
+  % If using xelatex or lualatex:
+  \setmainfont{Lato}
+\else
+  % If using pdflatex:
+  \usepackage[default]{lato}
+\fi
+
+% Change the colours if you want to
+\definecolor{VividPurple}{HTML}{3E0097}
+\definecolor{SlateGrey}{HTML}{2E2E2E}
+\definecolor{LightGrey}{HTML}{666666}
+% \colorlet{name}{black}
+\colorlet{tagline}{VividPurple}
+\colorlet{heading}{VividPurple}
+\colorlet{headingrule}{VividPurple}
+% \colorlet{subheading}{PastelRed}
+\colorlet{accent}{VividPurple}
+\colorlet{emphasis}{SlateGrey}
+\colorlet{body}{LightGrey}
+
+
+\renewcommand{\itemmarker}{{\small\textbullet}}
+\renewcommand{\ratingmarker}{\faCircle}
+
+%% sample.bib contains your publications
+\addbibresource{sample.bib}
+
+\begin{document}
+\name{PRANAB NANDY}
+\tagline{M.Tech (CSE) in NIT K Suratkal}
+\photo{2.7cm}{0SaiBaba}
+\personalinfo{
+
+  \email{nandypranab3@gmail.com}
+  \phone{+91 8961242867}
+  \location{Howrah, West Bengal, India}
+  \linkedin{linkedin.com/in/pranab-nandy }
+  \github{github.com/PranabNandy}
+  \homepage{pranabnandy.github.io}
+}
+
+\makecvheader
+
+
+\AtBeginEnvironment{itemize}{\small}
+
+\columnratio{0.6}
+
+
+\begin{paracol}{2}
+
+\cvsection{Education}
+\cvevent{National Institute of Technology Karnataka Suratkal} {M.Tech  in CSE - - - - - - - - - - - - - -   CGPA = On Going} {Sep 2020 -- June 2022} {Mangalore, India} 
+\divider
+
+\cvevent{Govt. College Of Engg. And Textile Technology, Serampore (MAKAUT,WB)}{B.Tech in CSE - - - - - - - - - - - - - -  CGPA = 8.97/10 }{July 2015 -- July 2019}{Serampore(Hoogly), India}
+\divider
+
+\cvevent{Howrah Zilla School (WBCHSE)}{High School (Science) - - - - - - - Percentage = 90\% }{June 2013 -- May 2015}{Howrah, India}
+\divider
+
+\cvevent{ Kona High School (WBBSE)}{Secondary School (Matrix) - - - Percentage = 84.14\% }{Jan 2003 -- May 2013}{Howrah, India}
+
+\cvsection{Projects}
+
+\cvevent{B.Tech Major Project}{Breast Cancer Histology Image Classification Using Deep Nueral Network}{}{}
+\begin{itemize}
+\item The main objective of the Model is to detect the stage of breast Cancer out of 4 stages from the high quality Histology Images using the Deep Convolution Neural Network in Python Language.         
+\item
+\cvtag{Python}
+\cvtag{ Keras } 
+\cvtag{NumPy}
+\cvtag{OpenCv}
+\cvtag{Matplotlib}
+\cvtag{pandas}
+\item
+https://github.com/PranabNandy/Breast-Cancer-Histology-Image-Classification
+\end{itemize}
+
+\divider
+
+\cvevent{Mini Project}{Easy Banking}{}{}
+\begin{itemize}
+\item The Application is developed using the concept of State  Transition in Automata Theory to enhanced the limitation of GUI based application using tkinter library of Python language.
+\item
+\cvtag{Python}
+\cvtag{ tkinter } 
+\cvtag{sqlite}
+\cvtag{Automata Theory}
+\item https://github.com/PranabNandy/Easy-Banking
+\end{itemize}
+
+\divider
+
+\cvevent{Mini Project}{Detection of Malicious URLs using ML}{}{}
+\begin{itemize}
+	\item Malicious URLs host unsolicited
+	content like spam, phishing, drive by downloads etc.Various Models are devoloped to detect the malicious URLs and try to compare their performence. 
+	\item
+	\cvtag{Python}
+	\cvtag{ Keras } 
+	\cvtag{NumPy}
+	\cvtag{sklearn}
+	\cvtag{Matplotlib}
+	\cvtag{pandas}
+	\item https://github.com/PranabNandy/Detection-of-Malicious-URLs
+\end{itemize}
+
+
+
+\switchcolumn
+
+\cvsection{Objectives}
+\begin{quote}
+``I am an enthusiastic learner and always ready to shape my knowledge as per industry requirement. ''
+\end{quote}
+
+\cvsection{Achievement}
+
+\cvachievement{\faTrophy}{AIR 560 in Gate 2020}{ 99.43 \%tile among 97481 candidates}
+
+\divider
+
+\cvachievement{\faTrophy}{AIR 851 in Gate 2019}{ 99.14 \%tile among 99932 candidates}
+
+\divider
+
+\cvachievement{\faCircle}{Ranked 5431 in WBJEE 2015}{Ranked 5431 in West Bengal JEE 2015 among 200000 (approx) candidates }
+
+\cvsection{Honours \& Awards}
+
+\cvachievement{\faGitlab}{SVMCM Scholarship (2013-2019)}{I was a scholar of SVMCM scholarship of West Bengal for 6 years continuously due to my academic performance }
+
+\divider
+
+\cvachievement{\faTrophy}{Scholar Award from Deputy Commissoner of H.M.C. (WB)}{Ranked 20 in Howrah District of West Bengal in 12th (WBCHSE) board exam.  }
+
+\cvsection{Extra-Curricular}
+
+\begin{itemize}
+\item Participated in Debate Competition for 4 consecutive years which was held by Texavision (Cultural fest of GCETTS).      
+
+\item Won 1st Prize in Drama Competition of GCETTS on the event of Techars' day in 2017 . 
+\end{itemize}
+
+
+
+\cvsection{Skills}
+\cvevent{Proficient} {} {} {} 
+
+\cvtag{ C } 
+\cvtag{C++(STL)}
+\cvtag{Python}
+\cvtag{Deep Learning}
+\cvtag{OOPs}
+\cvtag{SQL}
+\cvtag{HTML}
+\cvtag{CSS}
+
+\divider
+
+\cvevent{Familiar} {} {} {} 
+\cvtag{Machine Learning}
+\cvtag{Java}
+\cvtag{.NET (ASP / VB)}
+\cvtag{\LaTeX}
+
+\divider
+
+\cvevent{Area of Interest} {} {} {} 
+\cvtag{Operating System}
+\cvtag{Computer Network}
+\cvtag{DBMS}
+\end{paracol}
+
+\end{document}
+
